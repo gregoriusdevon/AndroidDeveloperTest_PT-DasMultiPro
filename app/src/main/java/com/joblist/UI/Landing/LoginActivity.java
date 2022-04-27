@@ -1,4 +1,4 @@
-package com.joblist.UI.Main;
+package com.joblist.UI.Landing;
 
 import android.content.Context;
 import android.content.Intent;
@@ -35,9 +35,9 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.joblist.R;
+import com.joblist.UI.Home.HomeActivity;
 
 import java.util.Arrays;
 

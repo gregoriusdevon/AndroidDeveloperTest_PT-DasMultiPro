@@ -1,4 +1,4 @@
-package com.joblist.UI.Main;
+package com.joblist.UI.Home;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -37,7 +37,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ps_container_transaksi, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.container_home, parent, false);
         return new ViewHolder(view);
     }
 

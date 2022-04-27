@@ -16,7 +16,7 @@
 
         <!--Splash & Onboarding-->
         <activity
-            android:name=".UI.Splash.SplashActivity"
+            android:name=".UI.Landing.SplashActivity"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,7 @@
         </activity>
 
         <!--Login-->
-        <activity android:name=".UI.Main.LoginActivity" />
+        <activity android:name=".UI.Landing.LoginActivity" />
 
         <activity
             android:name="com.facebook.FacebookActivity"
@@ -46,7 +46,7 @@
         </activity>
 
         <!--Activity Siswa-->
-        <activity android:name=".UI.Main.HomeActivity" />
+        <activity android:name=".UI.Home.HomeActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

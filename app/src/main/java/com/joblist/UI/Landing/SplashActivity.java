@@ -1,4 +1,4 @@
-package com.joblist.UI.Splash;
+package com.joblist.UI.Landing;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,6 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.joblist.R;
-import com.joblist.UI.Main.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

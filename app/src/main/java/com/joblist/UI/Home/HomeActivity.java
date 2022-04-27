@@ -1,4 +1,4 @@
-package com.joblist.UI.Main;
+package com.joblist.UI.Home;
 
 import android.content.Context;
 import android.content.Intent;
@@ -47,6 +47,7 @@ import com.joblist.Data.Helper.DrawerItem;
 import com.joblist.Data.Helper.SimpleItem;
 import com.joblist.Data.Model.Job;
 import com.joblist.R;
+import com.joblist.UI.Landing.LoginActivity;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
@@ -83,7 +84,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ps_activity_home);
+        setContentView(R.layout.activity_home);
 
         nama = findViewById(R.id.nama);
         emptyTransaksi = findViewById(R.id.emptyTransaksi);
