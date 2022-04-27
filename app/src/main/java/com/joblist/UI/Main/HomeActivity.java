@@ -40,8 +40,6 @@ import com.joblist.DB.ApiEndPoints;
 import com.joblist.Data.Helper.DrawerAdapter;
 import com.joblist.Data.Helper.DrawerItem;
 import com.joblist.Data.Helper.SimpleItem;
-import com.joblist.Data.Model.Siswa;
-import com.joblist.Data.Repository.SiswaRepository;
 import com.google.android.material.tabs.TabLayout;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
