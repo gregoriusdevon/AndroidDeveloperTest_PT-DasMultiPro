@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "118764891085",
+    "project_id": "joblist-pt-dans-multi-pro",
+    "storage_bucket": "joblist-pt-dans-multi-pro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118764891085:android:de031180936b3cf97d7284",
+        "android_client_info": {
+          "package_name": "com.joblist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "118764891085-9cfcfvdqlfmie9llea97b8bqrfp9t0ku.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.joblist",
+            "certificate_hash": "fa0a18c33e678a66b675d93a42acbc1e663ce9fe"
+          }
+        },
+        {
+          "client_id": "118764891085-adqvfndeg1n0tl7gomvn7u413f1hkofl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4RYlbYkLfpgyx2O2Z3X7-MHEkwJ8Wpvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "118764891085-adqvfndeg1n0tl7gomvn7u413f1hkofl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

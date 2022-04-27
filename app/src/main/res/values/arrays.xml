@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Admin -->
+    <string-array name="pa_sideNavTitles">
+        <item>Data Kelas</item>
+        <item>Data SPP</item>
+        <item>Data Petugas</item>
+        <item />
+        <item>Logout</item>
+    </string-array>
+    
+    <array name="pa_sideNavIcons">
+        <item>@drawable/ic_class</item>
+        <item>@drawable/ic_balance</item>
+        <item>@drawable/ic_person</item>
+        <item>0</item>
+        <item>@drawable/ic_power</item>
+    </array>
+
+    <!-- Siswa -->
+    <string-array name="ps_sideNavTitles">
+        <item>Home</item>
+        <item>Logout</item>
+    </string-array>
+
+    <array name="ps_sideNavIcons">
+        <item>@drawable/ic_home</item>
+        <item>@drawable/ic_power</item>
+    </array>
+
+    <!-- Petugas -->
+    <string-array name="pp_sideNavTitles">
+        <item>Home</item>
+        <item>Logout</item>
+    </string-array>
+
+    <array name="pp_sideNavIcons">
+        <item>@drawable/ic_home</item>
+        <item>@drawable/ic_power</item>
+    </array>
+</resources>

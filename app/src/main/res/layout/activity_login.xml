@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_layoutwhite"
+    android:overScrollMode="never">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="56dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Selamat Datang"
+        android:textColor="@color/grey700"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="Masukkan dengan Google atau Facebook"
+        android:textColor="@color/grey400"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/loginGoogle"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="12dp"
+        android:backgroundTint="@color/colorWhite"
+        android:fontFamily="@font/inter_bold"
+        android:padding="16dp"
+        android:text="Masuk dengan Google"
+        android:textAllCaps="false"
+        android:textColor="@color/grey700"
+        android:textSize="14sp"
+        app:cornerRadius="16dp"
+        app:icon="@drawable/ic_google"
+        app:iconSize="24dp"
+        app:iconTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/desc"
+        app:rippleColor="@color/grey200"
+        app:strokeColor="@color/grey200" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/loginFacebook"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="12dp"
+        android:backgroundTint="@color/colorWhite"
+        android:fontFamily="@font/inter_bold"
+        android:padding="16dp"
+        android:text="Masuk dengan Facebook"
+        android:textAllCaps="false"
+        android:textColor="@color/grey700"
+        android:textSize="14sp"
+        app:cornerRadius="16dp"
+        app:icon="@drawable/ic_facebook"
+        app:iconSize="24dp"
+        app:iconTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginGoogle"
+        app:rippleColor="@color/grey200"
+        app:strokeColor="@color/grey200" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loadingProgress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/material_grey"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

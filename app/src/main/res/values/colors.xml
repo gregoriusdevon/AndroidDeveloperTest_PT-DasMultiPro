@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Primary-->
+    <color name="red900">#650307</color>
+    <color name="red800">#C30909</color>
+    <color name="red700">#EA0B0B</color>
+    <color name="red600">#F41A1A</color>
+    <color name="red500">#E4262C</color>
+    <color name="red400">#F86868</color>
+    <color name="red300">#FA9494</color>
+    <color name="red200">#FCC0C0</color>
+    <color name="red100">#FDDDDD</color>
+    <color name="red50">#FFF7F7</color>
+
+    <!--Greyscale-->
+    <color name="grey900">#1A1C1E</color>
+    <color name="grey800">#1F2633</color>
+    <color name="grey700">#344057</color>
+    <color name="grey600">#41506D</color>
+    <color name="grey500">#7D89A0</color>
+    <color name="grey400">#A6AEBE</color>
+    <color name="grey300">#D0D4DD</color>
+    <color name="grey200">#E2E4E9</color>
+    <color name="grey100">#F1F2F4</color>
+    <color name="grey50">#FAFAFA</color>
+
+    <!--Other Colors-->
+    <color name="color50">#F5D7CF</color>
+    <color name="color100">#95A6CF</color>
+    <color name="color200">#D6CFC9</color>
+    <color name="color300">#C6C6CE</color>
+    <color name="color400">#CCAD9E</color>
+    <color name="colorCyan">#2EDCB5</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorYellow">#FFC700</color>
+    <color name="material_grey">#33303030</color>
+</resources>

@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutDialogContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:paddingTop="20dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:fontFamily="@font/inter_bold"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="Profil"
+            android:textColor="@color/grey700"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/clear"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="8dp"
+            android:src="@drawable/ic_clear"
+            app:layout_constraintBottom_toBottomOf="@+id/textTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/grey700" />
+
+        <ImageView
+            android:id="@+id/profile_pict"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_profilepict"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textTitle" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:background="#E4E4E4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvNISN" />
+
+        <TextView
+            android:id="@+id/tvNama"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/inter_bold"
+            android:text="Nama   : "
+            android:textColor="@color/grey700"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/profile_pict"
+            app:layout_constraintTop_toTopOf="@+id/tvFillNama"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tvFillNama"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/inter_bold"
+            android:text="Dummy"
+            android:textColor="@color/grey700"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvNISN"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvNama"
+            app:layout_constraintTop_toTopOf="@+id/profile_pict" />
+
+        <TextView
+            android:id="@+id/tvNISN"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
+            android:text="NISN    : NISN"
+            android:textColor="@color/grey500"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_pict"
+            app:layout_constraintEnd_toEndOf="@+id/tvFillNama"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/tvNama"
+            app:layout_constraintTop_toBottomOf="@+id/tvFillNama" />
+
+        <TextView
+            android:id="@+id/tvNIS"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="NIS                    : NIS"
+            android:textColor="@color/grey700"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/tvNISN"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <TextView
+            android:id="@+id/tvKelas"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="Kelas                 : Dummy"
+            android:textColor="@color/grey700"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/tvNIS"
+            app:layout_constraintStart_toStartOf="@+id/tvNIS"
+            app:layout_constraintTop_toBottomOf="@+id/tvNIS" />
+
+        <TextView
+            android:id="@+id/tvAlamat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="Alamat              : "
+            android:textColor="@color/grey700"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/tvNIS"
+            app:layout_constraintTop_toBottomOf="@+id/tvKelas" />
+
+        <TextView
+            android:id="@+id/tvFillAlamat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
+            android:text="Dummy"
+            android:textColor="@color/grey700"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/tvFillNama"
+            app:layout_constraintStart_toEndOf="@+id/tvAlamat"
+            app:layout_constraintTop_toTopOf="@+id/tvAlamat" />
+
+        <TextView
+            android:id="@+id/tvNoTelp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="Nomor Ponsel : Dummy"
+            android:textColor="@color/grey700"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/tvFillAlamat"
+            app:layout_constraintStart_toStartOf="@+id/tvNIS"
+            app:layout_constraintTop_toBottomOf="@+id/tvFillAlamat" />
+
+        <TextView
+            android:id="@+id/tvPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="Password          : [ENCRYPTED]"
+            android:textColor="@color/grey700"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/tvNoTelp"
+            app:layout_constraintStart_toStartOf="@+id/tvNIS"
+            app:layout_constraintTop_toBottomOf="@+id/tvNoTelp" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="44dp"
+            android:background="#E4E4E4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPassword" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutDialog2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_background"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:elevation="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textTitle2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textTitle2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:fontFamily="@font/inter_bold"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="Profil"
+            android:textColor="@color/grey700"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/clear2"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="8dp"
+            android:src="@drawable/ic_clear"
+            app:layout_constraintBottom_toBottomOf="@+id/textTitle2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#251F39" />
+
+        <ImageView
+            android:id="@+id/profile_pict2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_profilepict"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:background="#E4E4E4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_pict2" />
+
+        <TextView
+            android:id="@+id/tvNama2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/inter_bold"
+            android:text="Nama          : "
+            android:textColor="@color/grey700"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvLevel"
+            app:layout_constraintStart_toEndOf="@+id/profile_pict2"
+            app:layout_constraintTop_toTopOf="@+id/profile_pict2"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tvFillNama2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/inter_bold"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/grey700"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvNama2"
+            app:layout_constraintTop_toTopOf="@+id/tvNama2" />
+
+        <TextView
+            android:id="@+id/tvLevel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
+            android:text="Staff level : "
+            android:textColor="@color/grey500"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_pict2"
+            app:layout_constraintEnd_toEndOf="@+id/tvFillNama2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/tvNama2"
+            app:layout_constraintTop_toBottomOf="@+id/tvNama2" />
+
+        <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="Username : "
+            android:textColor="@color/grey700"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/tvFillNama2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+        <TextView
+            android:id="@+id/tvPassword2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="Password  : "
+            android:textColor="@color/grey700"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/tvFillNama2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="44dp"
+            android:background="#E4E4E4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPassword2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
