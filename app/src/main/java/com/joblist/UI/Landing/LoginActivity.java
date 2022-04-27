@@ -37,7 +37,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.joblist.R;
-import com.joblist.UI.Home.HomeActivity;
+import com.joblist.UI.Main.HomeActivity;
 
 import java.util.Arrays;
 

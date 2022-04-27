@@ -134,7 +134,7 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/process"
+        android:id="@+id/loadingProgress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/material_grey"

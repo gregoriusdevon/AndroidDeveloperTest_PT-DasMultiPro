@@ -46,7 +46,7 @@
         </activity>
 
         <!--Activity Siswa-->
-        <activity android:name=".UI.Home.HomeActivity" />
+        <activity android:name=".UI.Main.HomeActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

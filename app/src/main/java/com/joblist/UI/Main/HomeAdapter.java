@@ -1,4 +1,4 @@
-package com.joblist.UI.Home;
+package com.joblist.UI.Main;
 
 import android.content.Context;
 import android.view.LayoutInflater;

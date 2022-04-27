@@ -1,4 +1,4 @@
-package com.joblist.UI.Home;
+package com.joblist.UI.Main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -102,6 +102,12 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        api = retrofit.create(ApiEndPoints.class);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -117,12 +123,6 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() >= 1) {
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl(url)
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .build();
-                    api = retrofit.create(ApiEndPoints.class);
-
                     Call<List<Job>> call = api.searchLocation(url + "positions.json?location=" + s.toString().trim());
                     call.enqueue(new Callback<List<Job>>() {
                         @Override
@@ -181,7 +181,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
                     });
 
                 } else {
-                    loadDataPembayaran();
+                    loadJob();
                 }
             }
 
@@ -211,7 +211,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         loadingProgress.playAnimation();
         loadingProgress.setVisibility(LottieAnimationView.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        loadDataPembayaran();
+        loadJob();
     }
 
     @Override
@@ -238,7 +238,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     public void Refreshing() {
         swipeRefreshLayout.setRefreshing(true);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        loadDataPembayaran();
+        loadJob();
     }
 
     public void SideNavSetup() {
@@ -323,13 +323,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         recyclerView.scheduleLayoutAnimation();
     }
 
-    private void loadDataPembayaran() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        api = retrofit.create(ApiEndPoints.class);
-
+    private void loadJob() {
         Call<List<Job>> call = api.readJobs();
         call.enqueue(new Callback<List<Job>>() {
             @Override
