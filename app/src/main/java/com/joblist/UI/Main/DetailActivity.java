@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuInflater;
@@ -14,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -50,7 +52,6 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        String id = this.getIntent().getStringExtra("id");
 
         ImageView refresh = findViewById(R.id.refresh);
         OptRoundCardView back = findViewById(R.id.back);
@@ -109,14 +110,6 @@ public class DetailActivity extends AppCompatActivity {
         loadJob();
     }
 
-    private void runLayoutAnimation(final RecyclerView recyclerView) {
-        Context context = recyclerView.getContext();
-        LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_from_bottom);
-
-        recyclerView.setLayoutAnimation(controller);
-        recyclerView.scheduleLayoutAnimation();
-    }
-
     private void loadJob() {
         Call<List<Job>> call = api.readJobs();
         call.enqueue(new Callback<List<Job>>() {
@@ -129,7 +122,13 @@ public class DetailActivity extends AppCompatActivity {
                     emptyTransaksi.pauseAnimation();
                     emptyTransaksi.setVisibility(LottieAnimationView.GONE);
 
-                    //fill here
+                    ((TextView) findViewById(R.id.id)).setText("ID: #" + getIntent().getStringExtra("id"));
+                    ((TextView) findViewById(R.id.title)).setText(getIntent().getStringExtra("title"));
+                    ((TextView) findViewById(R.id.company)).setText(getIntent().getStringExtra("company"));
+                    ((TextView) findViewById(R.id.location)).setText(getIntent().getStringExtra("location"));
+                    ((TextView) findViewById(R.id.type)).setText(getIntent().getStringExtra("type"));
+                    ((TextView) findViewById(R.id.title2)).setText(getIntent().getStringExtra("title"));
+                    ((TextView) findViewById(R.id.description)).setText(Html.fromHtml(getIntent().getStringExtra("description")));
 
                 } else {
                     constraintLayout.setVisibility(View.GONE);

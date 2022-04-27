@@ -45,6 +45,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             Utils.preventTwoClick(v);
             Intent intent = new Intent(context, DetailActivity.class);
             intent.putExtra("id", job.getId());
+            intent.putExtra("title", job.getTitle());
+            intent.putExtra("company", job.getCompany());
+            intent.putExtra("location", job.getLocation());
+            intent.putExtra("type", job.getType());
+            intent.putExtra("description", job.getDescription());
             context.startActivity(intent);
         });
     }
