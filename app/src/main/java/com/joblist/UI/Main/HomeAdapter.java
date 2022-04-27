@@ -47,7 +47,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
         holder.tvCompany.setText(job.getCompany());
         holder.tvTitle.setText(job.getTitle());
-        holder.tvType.setText(job.getType());
+        holder.tvLocation.setText(job.getLocation());
 
         holder.constraintLayout.setOnClickListener(v -> {
             Utils.preventTwoClick(v);
@@ -72,13 +72,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout constraintLayout;
-        TextView tvCompany, tvTitle, tvType;
+        TextView tvCompany, tvTitle, tvLocation;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvCompany = itemView.findViewById(R.id.company);
             tvTitle = itemView.findViewById(R.id.title);
-            tvType = itemView.findViewById(R.id.type);
+            tvLocation = itemView.findViewById(R.id.location);
             constraintLayout = itemView.findViewById(R.id.constraintLayout);
         }
     }

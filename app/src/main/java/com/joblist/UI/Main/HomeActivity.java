@@ -1,21 +1,37 @@
 package com.joblist.UI.Main;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,11 +39,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.joblist.DB.ApiEndPoints;
+import com.joblist.Data.Helper.DrawerAdapter;
+import com.joblist.Data.Helper.DrawerItem;
+import com.joblist.Data.Helper.SimpleItem;
 import com.joblist.Data.Model.Job;
 import com.joblist.R;
+import com.yarolegovich.slidingrootnav.SlidingRootNav;
+import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -38,13 +64,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.joblist.DB.baseURL.url;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener {
+    private static final int POS_DASHBOARD = 0;
+    private static final int POS_LOGOUT = 1;
+
     private ApiEndPoints api;
     private HomeAdapter adapter;
-    private EditText searchSiswa;
+    private String[] screenTitles;
+    private Drawable[] screenIcons;
     private RecyclerView recyclerView;
+    private SlidingRootNav slidingRootNav;
     private SwipeRefreshLayout swipeRefreshLayout;
     private final List<Job> job = new ArrayList<>();
+    private boolean doubleBackToExitPressedOnce = false;
     private LottieAnimationView emptyTransaksi, loadingProgress;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
@@ -53,7 +85,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ps_activity_home);
 
-        searchSiswa = findViewById(R.id.searchSiswa);
+        EditText searchSiswa = findViewById(R.id.searchSiswa);
         emptyTransaksi = findViewById(R.id.emptyTransaksi);
         loadingProgress = findViewById(R.id.loadingProgress);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
@@ -86,7 +118,7 @@ public class HomeActivity extends AppCompatActivity {
                             .build();
                     api = retrofit.create(ApiEndPoints.class);
 
-                    Call<List<Job>> call = api.searchLocation(url+"positions.json?location="+s.toString().trim());
+                    Call<List<Job>> call = api.searchLocation(url + "positions.json?location=" + s.toString().trim());
                     call.enqueue(new Callback<List<Job>>() {
                         @Override
                         public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
@@ -155,6 +187,8 @@ public class HomeActivity extends AppCompatActivity {
 
         adapter.setOnRecyclerViewItemClickListener((id) -> {
         });
+
+        SideNavSetup();
     }
 
     @Override
@@ -167,10 +201,129 @@ public class HomeActivity extends AppCompatActivity {
         loadDataPembayaran();
     }
 
+    @Override
+    public void onBackPressed() {
+        slidingRootNav.openMenu();
+        if (slidingRootNav.isMenuOpened()) {
+            if (doubleBackToExitPressedOnce) {
+                finishAffinity();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Tekan lagi untuk keluar...", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+        }
+    }
+
     public void Refreshing() {
         swipeRefreshLayout.setRefreshing(true);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         loadDataPembayaran();
+    }
+
+    public void SideNavSetup() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+
+        slidingRootNav = new SlidingRootNavBuilder(this)
+                .withToolbarMenuToggle(toolbar)
+                .withMenuOpened(false)
+                .withContentClickableWhenMenuOpened(false)
+                .withMenuLayout(R.layout.activity_sidenav)
+                .withDragDistance(100)
+                .withRootViewScale(0.8f)
+                .withRootViewElevation(5)
+                .inject();
+
+        screenIcons = loadScreenIcons();
+        screenTitles = loadScreenTitles();
+
+        DrawerAdapter adapter = new DrawerAdapter(Arrays.asList(
+                createItemFor(POS_DASHBOARD).setChecked(true),
+                createItemFor(POS_LOGOUT)));
+        adapter.setListener(this);
+        adapter.setSelected(POS_DASHBOARD);
+
+        RecyclerView list = findViewById(R.id.list);
+        list.setNestedScrollingEnabled(false);
+        list.setLayoutManager(new LinearLayoutManager(this));
+        list.setAdapter(adapter);
+    }
+
+    @Override
+    public void onItemSelected(int position) {
+        if (position == POS_LOGOUT) {
+            GoogleSignIn.getClient(HomeActivity.this, new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()).signOut();
+            LoginManager.getInstance().logOut();
+
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_profile) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
+            View view = LayoutInflater.from(this).inflate(R.layout.dialog_profile, findViewById(R.id.layoutDialogContainer));
+            builder.setView(view);
+            AlertDialog alertDialog = builder.create();
+
+            ((TextView) view.findViewById(R.id.tvFillNama2)).setText("nama");
+            ((TextView) view.findViewById(R.id.tvLevel)).setText("Staff level : " + "rank");
+            ((TextView) view.findViewById(R.id.tvUsername)).setText("Username : " + "username");
+            ((TextView) view.findViewById(R.id.tvPassword2)).setText("Password : " + "password");
+
+            view.findViewById(R.id.layoutDialog).setVisibility(View.GONE);
+            view.findViewById(R.id.layoutDialog2).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.clear2).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                }
+            });
+            if (alertDialog.getWindow() != null) {
+                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+            alertDialog.show();
+
+        } else if (id == R.id.action_refresh) {
+            Refreshing();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
     }
 
     private void runLayoutAnimation(final RecyclerView recyclerView) {
@@ -244,5 +397,36 @@ public class HomeActivity extends AppCompatActivity {
                 Log.e("DEBUG", "Error: ", t);
             }
         });
+    }
+
+    @SuppressWarnings("rawtypes")
+    private DrawerItem createItemFor(int position) {
+        return new SimpleItem(screenIcons[position], screenTitles[position])
+                .withIconTint(color(R.color.grey300))
+                .withTextTint(color(R.color.grey300))
+                .withSelectedIconTint(color(R.color.red500))
+                .withSelectedTextTint(color(R.color.red500));
+    }
+
+    private String[] loadScreenTitles() {
+        return getResources().getStringArray(R.array.pp_sideNavTitles);
+    }
+
+    private Drawable[] loadScreenIcons() {
+        TypedArray ta = getResources().obtainTypedArray(R.array.pp_sideNavIcons);
+        Drawable[] icons = new Drawable[ta.length()];
+        for (int i = 0; i < ta.length(); i++) {
+            int id = ta.getResourceId(i, 0);
+            if (id != 0) {
+                icons[i] = ContextCompat.getDrawable(this, id);
+            }
+        }
+        ta.recycle();
+        return icons;
+    }
+
+    @ColorInt
+    private int color(@ColorRes int res) {
+        return ContextCompat.getColor(this, res);
     }
 }
