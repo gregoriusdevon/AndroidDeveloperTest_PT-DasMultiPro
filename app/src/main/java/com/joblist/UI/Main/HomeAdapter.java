@@ -1,6 +1,7 @@
 package com.joblist.UI.Main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +20,6 @@ import java.util.List;
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     private final Context context;
     private final List<Job> listJob;
-    private static OnRecyclerViewItemClickListener mListener;
-
-    public interface OnRecyclerViewItemClickListener {
-        void onItemClicked(String id);
-    }
-
-    public void setOnRecyclerViewItemClickListener(OnRecyclerViewItemClickListener listener) {
-        mListener = listener;
-    }
 
     public HomeAdapter(Context context, List<Job> job) {
         this.context = context;
@@ -51,7 +43,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
         holder.constraintLayout.setOnClickListener(v -> {
             Utils.preventTwoClick(v);
-            mListener.onItemClicked(job.getId());
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra("id", job.getId());
+            context.startActivity(intent);
         });
     }
 

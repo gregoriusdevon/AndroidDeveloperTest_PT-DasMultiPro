@@ -10,11 +10,10 @@
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="JobList"
-        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/Theme.ModulSPP_UKK2021">
 
-        <!--Splash & Onboarding-->
+        <!--Splash & Login-->
         <activity
             android:name=".UI.Landing.SplashActivity"
             android:noHistory="true">
@@ -23,15 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!--Login-->
         <activity android:name=".UI.Landing.LoginActivity" />
-
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -45,8 +40,9 @@
             </intent-filter>
         </activity>
 
-        <!--Activity Siswa-->
+        <!--Main-->
         <activity android:name=".UI.Main.HomeActivity" />
+        <activity android:name=".UI.Main.DetailActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

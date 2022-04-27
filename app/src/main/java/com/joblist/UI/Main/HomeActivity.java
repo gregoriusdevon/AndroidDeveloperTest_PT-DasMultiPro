@@ -67,7 +67,6 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     private static final int POS_DASHBOARD = 0;
     private static final int POS_LOGOUT = 1;
 
-    private TextView nama;
     private ApiEndPoints api;
     private HomeAdapter adapter;
     private String[] screenTitles;
@@ -86,7 +85,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        nama = findViewById(R.id.nama);
+        TextView nama = findViewById(R.id.nama);
         emptyTransaksi = findViewById(R.id.emptyTransaksi);
         EditText searchSiswa = findViewById(R.id.searchSiswa);
         loadingProgress = findViewById(R.id.loadingProgress);
@@ -188,9 +187,6 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
             @Override
             public void afterTextChanged(Editable s) {
             }
-        });
-
-        adapter.setOnRecyclerViewItemClickListener((id) -> {
         });
 
         SideNavSetup();

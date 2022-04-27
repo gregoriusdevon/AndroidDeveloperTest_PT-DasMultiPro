@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -40,6 +41,7 @@ import static com.joblist.DB.baseURL.url;
 
 public class DetailActivity extends AppCompatActivity {
     private ApiEndPoints api;
+    private ConstraintLayout constraintLayout;
     private SwipeRefreshLayout swipeRefreshLayout;
     private LottieAnimationView emptyTransaksi, loadingProgress;
 
@@ -48,11 +50,13 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        String id = this.getIntent().getStringExtra("id");
 
         ImageView refresh = findViewById(R.id.refresh);
         OptRoundCardView back = findViewById(R.id.back);
         emptyTransaksi = findViewById(R.id.emptyTransaksi);
         loadingProgress = findViewById(R.id.loadingProgress);
+        constraintLayout = findViewById(R.id.constraintLayout);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -121,16 +125,14 @@ public class DetailActivity extends AppCompatActivity {
                 List<Job> job = response.body();
 
                 if (job.size() > 0) {
-                    recyclerView.setVisibility(View.VISIBLE);
+                    constraintLayout.setVisibility(View.VISIBLE);
                     emptyTransaksi.pauseAnimation();
                     emptyTransaksi.setVisibility(LottieAnimationView.GONE);
 
-                    adapter = new HomeAdapter(HomeActivity.this, job);
-                    recyclerView.setAdapter(adapter);
-                    runLayoutAnimation(recyclerView);
+                    //fill here
 
                 } else {
-                    recyclerView.setVisibility(View.GONE);
+                    constraintLayout.setVisibility(View.GONE);
                     emptyTransaksi.setAnimation(R.raw.nodata);
                     emptyTransaksi.playAnimation();
                     emptyTransaksi.setVisibility(LottieAnimationView.VISIBLE);
@@ -152,7 +154,7 @@ public class DetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Job>> call, Throwable t) {
-                recyclerView.setVisibility(View.GONE);
+                constraintLayout.setVisibility(View.GONE);
 
                 emptyTransaksi.setAnimation(R.raw.nointernet);
                 emptyTransaksi.playAnimation();
