@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -28,7 +26,6 @@ import android.widget.Toast;
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -41,8 +38,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.airbnb.lottie.LottieAnimationView;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.joblist.DB.ApiEndPoints;
 import com.joblist.Data.Helper.DrawerAdapter;
 import com.joblist.Data.Helper.DrawerItem;
@@ -68,11 +66,13 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     private static final int POS_DASHBOARD = 0;
     private static final int POS_LOGOUT = 1;
 
+    private TextView nama;
     private ApiEndPoints api;
     private HomeAdapter adapter;
     private String[] screenTitles;
     private Drawable[] screenIcons;
     private RecyclerView recyclerView;
+    private FirebaseAuth mFirebaseAuth;
     private SlidingRootNav slidingRootNav;
     private SwipeRefreshLayout swipeRefreshLayout;
     private final List<Job> job = new ArrayList<>();
@@ -85,10 +85,14 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ps_activity_home);
 
-        EditText searchSiswa = findViewById(R.id.searchSiswa);
+        nama = findViewById(R.id.nama);
         emptyTransaksi = findViewById(R.id.emptyTransaksi);
+        EditText searchSiswa = findViewById(R.id.searchSiswa);
         loadingProgress = findViewById(R.id.loadingProgress);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        nama.setText(getUserName());
 
         recyclerView = findViewById(R.id.recyclerTagihanSiswa);
         adapter = new HomeAdapter(this, job);
@@ -191,6 +195,14 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         SideNavSetup();
     }
 
+    private String getUserName() {
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+        if (user != null) {
+            return user.getDisplayName();
+        }
+        return "error";
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -279,31 +291,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_profile) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
-            View view = LayoutInflater.from(this).inflate(R.layout.dialog_profile, findViewById(R.id.layoutDialogContainer));
-            builder.setView(view);
-            AlertDialog alertDialog = builder.create();
-
-            ((TextView) view.findViewById(R.id.tvFillNama2)).setText("nama");
-            ((TextView) view.findViewById(R.id.tvLevel)).setText("Staff level : " + "rank");
-            ((TextView) view.findViewById(R.id.tvUsername)).setText("Username : " + "username");
-            ((TextView) view.findViewById(R.id.tvPassword2)).setText("Password : " + "password");
-
-            view.findViewById(R.id.layoutDialog).setVisibility(View.GONE);
-            view.findViewById(R.id.layoutDialog2).setVisibility(View.VISIBLE);
-            view.findViewById(R.id.clear2).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alertDialog.dismiss();
-                }
-            });
-            if (alertDialog.getWindow() != null) {
-                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-            }
-            alertDialog.show();
-
-        } else if (id == R.id.action_refresh) {
+        if (id == R.id.action_refresh) {
             Refreshing();
         }
         return super.onOptionsItemSelected(item);
