@@ -117,6 +117,13 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
                 .build();
         api = retrofit.create(ApiEndPoints.class);
 
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popupView = layoutInflater.inflate(R.layout.popupmenu_filter, null);
+        PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setOutsideTouchable(true);
+        SwitchCompat fullTime = popupView.findViewById(R.id.fullTime);
+        SwitchCompat partTime = popupView.findViewById(R.id.partTime);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -132,6 +139,12 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() >= 1) {
+                    if (fullTime.isChecked() | partTime.isChecked()) {
+                        fullTime.setChecked(false);
+                        partTime.setChecked(false);
+                        loadJobs(api.readJobs());
+                    }
+
                     call = api.searchJob(url + "positions.json?location=" + s.toString().trim());
                     call.enqueue(new Callback<List<Job>>() {
                         @Override
@@ -201,31 +214,28 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
         filter.setOnClickListener(v -> {
             Utils.preventTwoClick(v);
-
-            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View popupView = layoutInflater.inflate(R.layout.popupmenu_filter, null);
-            PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            popupWindow.setOutsideTouchable(true);
             popupWindow.showAsDropDown(v);
 
-            SwitchCompat fullTime = popupView.findViewById(R.id.fullTime);
             fullTime.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    searchSiswa.getText().clear();
                     if (fullTime.isChecked()) {
-                        loadJobs(api.searchJob(url + "positions.json?full_time=true"));
+                        call = api.searchJob(url + "positions.json?full_time=true");
+                        loadJobs(call);
                     } else {
                         loadJobs(api.readJobs());
                     }
                 }
             });
 
-            SwitchCompat partTime = popupView.findViewById(R.id.partTime);
             partTime.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    searchSiswa.getText().clear();
                     if (partTime.isChecked()) {
-                        loadJobs(api.searchJob(url + "positions.json?full_time=true"));
+                        call = api.searchJob(url + "positions.json?full_time=false");
+                        loadJobs(call);
                     } else {
                         loadJobs(api.readJobs());
                     }
@@ -236,6 +246,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
             clearAll.setOnClickListener(v2 -> {
                 Utils.preventTwoClick(v2);
                 if (fullTime.isChecked() | partTime.isChecked()) {
+                    searchSiswa.getText().clear();
                     fullTime.setChecked(false);
                     partTime.setChecked(false);
                     loadJobs(api.readJobs());
@@ -258,7 +269,6 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     @Override
     public void onResume() {
         super.onResume();
-        searchSiswa.getText().clear();
         loadingProgress.setAnimation(R.raw.loading);
         loadingProgress.playAnimation();
         loadingProgress.setVisibility(LottieAnimationView.VISIBLE);
