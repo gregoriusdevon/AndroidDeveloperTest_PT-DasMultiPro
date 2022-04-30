@@ -9,9 +9,8 @@ import android.widget.TextView;
 
 import com.joblist.R;
 
-/**
- * Created by yarolegovich on 25.03.2017.
- */
+//Created by yarolegovich on 25.03.2017.
+
 public class SimpleItem extends DrawerItem<SimpleItem.ViewHolder> {
 
     private int selectedItemIconTint;

@@ -2,9 +2,7 @@ package com.joblist.Data.Helper;
 
 import android.view.ViewGroup;
 
-/**
- * Created by yarolegovich on 25.03.2017.
- */
+//Created by yarolegovich on 25.03.2017.
 
 public abstract class DrawerItem<T extends DrawerAdapter.ViewHolder> {
 

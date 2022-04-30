@@ -36,23 +36,22 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
+    // Firebase integrated for login
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
+    implementation 'com.google.android.gms:play-services-auth:20.1.0'
+    implementation platform('com.google.firebase:firebase-bom:29.3.1')
+
+    // Misc
     implementation 'com.airbnb.android:lottie:3.5.0'
-    implementation 'com.intuit.sdp:sdp-android:1.0.6'
-    implementation 'com.intuit.ssp:ssp-android:1.0.6'
     implementation 'com.squareup.retrofit2:retrofit:2.1.0'
     implementation 'com.yarolegovich:sliding-root-nav:1.1.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'com.github.captain-miao:optroundcardview:1.0.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-
-    implementation platform('com.google.firebase:firebase-bom:29.3.1')
-    implementation 'com.google.firebase:firebase-auth'
-    implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
-
-    implementation 'com.google.firebase:firebase-analytics'
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    implementation 'com.google.android.gms:play-services-auth:20.1.0'
 }
 apply plugin: 'com.google.gms.google-services'
 

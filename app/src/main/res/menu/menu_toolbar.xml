@@ -8,5 +8,4 @@
         android:id="@+id/action_refresh"
         android:title="Refresh"
         app:showAsAction="never" />
-
 </menu>

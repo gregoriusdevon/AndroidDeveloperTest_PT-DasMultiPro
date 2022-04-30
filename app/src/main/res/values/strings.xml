@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SiAKAD</string>
+    <string name="app_name">JobList</string>
     <string name="facebook_app_id">285363263663493</string>
     <string name="fb_login_protocol_scheme">fb422829041742412</string>
     <string name="facebook_client_token">34d4ffa04b3277aa02075650ff248b10</string>

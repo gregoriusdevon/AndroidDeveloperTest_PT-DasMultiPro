@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="pp_sideNavTitles">
+    <string-array name="sideNavTitles">
         <item>Home</item>
         <item>Logout</item>
     </string-array>
 
-    <array name="pp_sideNavIcons">
+    <array name="sideNavIcons">
         <item>@drawable/ic_home</item>
         <item>@drawable/ic_power</item>
     </array>

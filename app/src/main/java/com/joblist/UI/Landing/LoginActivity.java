@@ -3,6 +3,8 @@ package com.joblist.UI.Landing;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -43,6 +45,7 @@ import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
     private LottieAnimationView loadingProgress;
+    private MaterialButton loginFacebook, loginGoogle;
     private boolean doubleBackToExitPressedOnce = false;
 
     private FirebaseAuth mAuth;
@@ -56,6 +59,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        loginGoogle = findViewById(R.id.loginGoogle);
+        loginFacebook = findViewById(R.id.loginFacebook);
         loadingProgress = findViewById(R.id.loadingProgress);
 
         mCallbackManager = CallbackManager.Factory.create();
@@ -86,7 +92,6 @@ public class LoginActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
         mSignInClient = GoogleSignIn.getClient(this, gso);
-        MaterialButton loginGoogle = findViewById(R.id.loginGoogle);
         loginGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,29 +101,12 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         mAuth = FirebaseAuth.getInstance();
-        MaterialButton loginFacebook = findViewById(R.id.loginFacebook);
         loginFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("email", "public_profile"));
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
-            } catch (ApiException e) {
-                Log.w(TAG, "Google sign in failed", e);
-            }
-        }
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
@@ -141,7 +129,6 @@ public class LoginActivity extends AppCompatActivity {
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
                 if (task.isSuccessful()) {
-//                    FirebaseUser user = mAuth.getCurrentUser();
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     finish();
 
@@ -153,12 +140,48 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+            // connected to Wifi
+            haveConnectedWifi = true;
+        } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+            //connected to MobileData
+            haveConnectedMobile = true;
+        }
+
+        return haveConnectedWifi || haveConnectedMobile;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account);
+            } catch (ApiException e) {
+                Log.w(TAG, "Google sign in failed", e);
+            }
+        }
+    }
+
     @Override
     public void onStart() {
         super.onStart();
         if (AccessToken.getCurrentAccessToken() != null | GoogleSignIn.getLastSignedInAccount(LoginActivity.this) != null) {
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
+        } else if (!haveNetworkConnection()) {
+            loginGoogle.setEnabled(false);
+            loginFacebook.setEnabled(false);
         }
     }
 

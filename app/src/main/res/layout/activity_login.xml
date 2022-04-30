@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/inter_medium"
-        android:text="Masukkan dengan Google atau Facebook"
+        android:text="Masuk dengan Google atau Facebook"
         android:textColor="@color/grey400"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/title"

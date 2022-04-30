@@ -388,11 +388,11 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     }
 
     private String[] loadScreenTitles() {
-        return getResources().getStringArray(R.array.pp_sideNavTitles);
+        return getResources().getStringArray(R.array.sideNavTitles);
     }
 
     private Drawable[] loadScreenIcons() {
-        TypedArray ta = getResources().obtainTypedArray(R.array.pp_sideNavIcons);
+        TypedArray ta = getResources().obtainTypedArray(R.array.sideNavIcons);
         Drawable[] icons = new Drawable[ta.length()];
         for (int i = 0; i < ta.length(); i++) {
             int id = ta.getResourceId(i, 0);

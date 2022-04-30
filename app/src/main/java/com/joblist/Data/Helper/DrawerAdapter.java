@@ -11,9 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by yarolegovich on 25.03.2017.
- */
+//Created by yarolegovich on 25.03.2017.
 
 @SuppressWarnings({"rawtypes", "ConstantConditions"})
 public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder> {
