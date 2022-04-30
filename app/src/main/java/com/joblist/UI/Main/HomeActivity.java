@@ -222,6 +222,10 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
                     searchSiswa.getText().clear();
                     if (fullTime.isChecked()) {
                         call = api.searchJob(url + "positions.json?full_time=true");
+
+                        emptyTransaksi.setAnimation(R.raw.loading);
+                        emptyTransaksi.playAnimation();
+                        emptyTransaksi.setVisibility(LottieAnimationView.VISIBLE);
                         loadJobs(call);
                     } else {
                         loadJobs(api.readJobs());
@@ -235,6 +239,10 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
                     searchSiswa.getText().clear();
                     if (partTime.isChecked()) {
                         call = api.searchJob(url + "positions.json?full_time=false");
+
+                        emptyTransaksi.setAnimation(R.raw.loading);
+                        emptyTransaksi.playAnimation();
+                        emptyTransaksi.setVisibility(LottieAnimationView.VISIBLE);
                         loadJobs(call);
                     } else {
                         loadJobs(api.readJobs());
@@ -249,6 +257,10 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
                     searchSiswa.getText().clear();
                     fullTime.setChecked(false);
                     partTime.setChecked(false);
+
+                    emptyTransaksi.setAnimation(R.raw.loading);
+                    emptyTransaksi.playAnimation();
+                    emptyTransaksi.setVisibility(LottieAnimationView.VISIBLE);
                     loadJobs(api.readJobs());
                 }
             });
@@ -387,10 +399,6 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     }
 
     private void loadJobs(Call<List<Job>> query) {
-        emptyTransaksi.setAnimation(R.raw.loading);
-        emptyTransaksi.playAnimation();
-        emptyTransaksi.setVisibility(LottieAnimationView.VISIBLE);
-
         call = query;
         call.enqueue(new Callback<List<Job>>() {
             @Override
