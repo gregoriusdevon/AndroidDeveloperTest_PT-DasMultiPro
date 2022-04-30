@@ -11,15 +11,19 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +31,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -37,6 +42,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.facebook.login.LoginManager;
+import com.github.captain_miao.optroundcardview.OptRoundCardView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,6 +51,7 @@ import com.joblist.DB.ApiEndPoints;
 import com.joblist.Data.Helper.DrawerAdapter;
 import com.joblist.Data.Helper.DrawerItem;
 import com.joblist.Data.Helper.SimpleItem;
+import com.joblist.Data.Helper.Utils;
 import com.joblist.Data.Model.Job;
 import com.joblist.R;
 import com.joblist.UI.Landing.LoginActivity;
@@ -69,6 +76,8 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
     private ApiEndPoints api;
     private HomeAdapter adapter;
+    private EditText searchSiswa;
+    private Call<List<Job>> call;
     private String[] screenTitles;
     private Drawable[] screenIcons;
     private RecyclerView recyclerView;
@@ -86,8 +95,9 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         setContentView(R.layout.activity_home);
 
         TextView nama = findViewById(R.id.nama);
+        searchSiswa = findViewById(R.id.searchSiswa);
         emptyTransaksi = findViewById(R.id.emptyTransaksi);
-        EditText searchSiswa = findViewById(R.id.searchSiswa);
+        OptRoundCardView filter = findViewById(R.id.filter);
         loadingProgress = findViewById(R.id.loadingProgress);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
 
@@ -122,7 +132,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() >= 1) {
-                    Call<List<Job>> call = api.searchJob(url + "positions.json?location=" + s.toString().trim());
+                    call = api.searchJob(url + "positions.json?location=" + s.toString().trim());
                     call.enqueue(new Callback<List<Job>>() {
                         @Override
                         public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
@@ -180,13 +190,58 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
                     });
 
                 } else {
-                    loadJob();
+                    loadJobs(api.readJobs());
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
             }
+        });
+
+        filter.setOnClickListener(v -> {
+            Utils.preventTwoClick(v);
+
+            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View popupView = layoutInflater.inflate(R.layout.popupmenu_filter, null);
+            PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            popupWindow.setOutsideTouchable(true);
+            popupWindow.showAsDropDown(v);
+
+            SwitchCompat fullTime = popupView.findViewById(R.id.fullTime);
+            fullTime.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (fullTime.isChecked()) {
+                        loadJobs(api.searchJob(url + "positions.json?full_time=true"));
+                    } else {
+                        loadJobs(api.readJobs());
+                    }
+                }
+            });
+
+            SwitchCompat partTime = popupView.findViewById(R.id.partTime);
+            partTime.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (partTime.isChecked()) {
+                        loadJobs(api.searchJob(url + "positions.json?full_time=true"));
+                    } else {
+                        loadJobs(api.readJobs());
+                    }
+                }
+            });
+
+            TextView clearAll = popupView.findViewById(R.id.clearAll);
+            clearAll.setOnClickListener(v2 -> {
+                Utils.preventTwoClick(v2);
+                if (fullTime.isChecked() | partTime.isChecked()) {
+                    fullTime.setChecked(false);
+                    partTime.setChecked(false);
+                    loadJobs(api.readJobs());
+                }
+            });
+
         });
 
         SideNavSetup();
@@ -203,11 +258,12 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     @Override
     public void onResume() {
         super.onResume();
+        searchSiswa.getText().clear();
         loadingProgress.setAnimation(R.raw.loading);
         loadingProgress.playAnimation();
         loadingProgress.setVisibility(LottieAnimationView.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        loadJob();
+        loadJobs(api.readJobs());
     }
 
     @Override
@@ -232,9 +288,10 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     }
 
     public void Refreshing() {
+        searchSiswa.getText().clear();
         swipeRefreshLayout.setRefreshing(true);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        loadJob();
+        loadJobs(api.readJobs());
     }
 
     public void SideNavSetup() {
@@ -319,8 +376,12 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         recyclerView.scheduleLayoutAnimation();
     }
 
-    private void loadJob() {
-        Call<List<Job>> call = api.readJobs();
+    private void loadJobs(Call<List<Job>> query) {
+        emptyTransaksi.setAnimation(R.raw.loading);
+        emptyTransaksi.playAnimation();
+        emptyTransaksi.setVisibility(LottieAnimationView.VISIBLE);
+
+        call = query;
         call.enqueue(new Callback<List<Job>>() {
             @Override
             public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
