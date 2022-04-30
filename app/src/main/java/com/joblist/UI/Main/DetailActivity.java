@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuInflater;
@@ -26,8 +27,6 @@ import com.joblist.DB.ApiEndPoints;
 import com.joblist.Data.Helper.Utils;
 import com.joblist.Data.Model.Job;
 import com.joblist.R;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -107,24 +106,28 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void loadJob() {
-        Call<List<Job>> call = api.readJobs();
-        call.enqueue(new Callback<List<Job>>() {
+        Call<Job> call = api.readDetail(url + "positions/" + getIntent().getStringExtra("id"));
+        call.enqueue(new Callback<Job>() {
             @Override
-            public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
-                List<Job> job = response.body();
+            public void onResponse(Call<Job> call, Response<Job> response) {
+                Job job = response.body();
 
-                if (job.size() > 0) {
+                if (job != null) {
                     constraintLayout.setVisibility(View.VISIBLE);
                     emptyTransaksi.pauseAnimation();
                     emptyTransaksi.setVisibility(LottieAnimationView.GONE);
 
-                    ((TextView) findViewById(R.id.id)).setText("ID: #" + getIntent().getStringExtra("id"));
-                    ((TextView) findViewById(R.id.title)).setText(getIntent().getStringExtra("title"));
-                    ((TextView) findViewById(R.id.company)).setText(getIntent().getStringExtra("company"));
-                    ((TextView) findViewById(R.id.location)).setText(getIntent().getStringExtra("location"));
-                    ((TextView) findViewById(R.id.type)).setText(getIntent().getStringExtra("type"));
-                    ((TextView) findViewById(R.id.title2)).setText(getIntent().getStringExtra("title"));
-                    ((TextView) findViewById(R.id.description)).setText(Html.fromHtml(getIntent().getStringExtra("description")));
+                    ((TextView) findViewById(R.id.id)).setText("ID: #" + job.getId());
+                    ((TextView) findViewById(R.id.title)).setText(job.getTitle());
+                    ((TextView) findViewById(R.id.company)).setText(job.getCompany());
+                    ((TextView) findViewById(R.id.location)).setText(job.getLocation());
+                    ((TextView) findViewById(R.id.type)).setText(job.getType());
+                    ((TextView) findViewById(R.id.title2)).setText(job.getTitle());
+                    ((TextView) findViewById(R.id.description)).setText(Html.fromHtml(job.getDescription()));
+                    ((TextView) findViewById(R.id.howToApply)).setText(Html.fromHtml(job.getHow_to_apply()));
+
+                    ((TextView) findViewById(R.id.description)).setMovementMethod(LinkMovementMethod.getInstance());
+                    ((TextView) findViewById(R.id.howToApply)).setMovementMethod(LinkMovementMethod.getInstance());
 
                 } else {
                     constraintLayout.setVisibility(View.GONE);
@@ -148,7 +151,7 @@ public class DetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Job>> call, Throwable t) {
+            public void onFailure(Call<Job> call, Throwable t) {
                 constraintLayout.setVisibility(View.GONE);
 
                 emptyTransaksi.setAnimation(R.raw.nointernet);

@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="240dp"
         android:background="@drawable/bg_cardhome"
-        android:backgroundTint="@null"
-        app:elevation="0dp">
+        android:backgroundTint="@null">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
@@ -66,42 +65,67 @@
                 app:layout_collapseMode="pin" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/search_bar"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            app:boxBackgroundColor="@color/colorWhite"
-            app:boxCornerRadiusBottomEnd="8dp"
-            app:boxCornerRadiusBottomStart="8dp"
-            app:boxCornerRadiusTopEnd="8dp"
-            app:boxCornerRadiusTopStart="8dp"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp"
-            app:hintAnimationEnabled="false"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="@+id/profile_pict"
-            app:layout_constraintStart_toStartOf="@+id/nama"
-            app:layout_constraintTop_toBottomOf="@+id/profile_pict">
+            android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/searchSiswa"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/search_bar"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_search"
-                android:drawablePadding="12dp"
-                android:drawableTint="@color/grey300"
-                android:focusableInTouchMode="true"
-                android:fontFamily="@font/inter_medium"
-                android:hint="Cari Lokasi Lowongan"
-                android:imeOptions="actionSearch"
-                android:paddingTop="11dp"
-                android:paddingBottom="11dp"
-                android:singleLine="true"
-                android:textColorHint="@color/grey400"
-                android:textSize="14sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                app:boxBackgroundColor="@color/colorWhite"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:hintAnimationEnabled="false"
+                app:hintEnabled="false"
+                app:layout_constraintEnd_toStartOf="@+id/filter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/searchSiswa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_search"
+                    android:drawablePadding="12dp"
+                    android:drawableTint="@color/grey300"
+                    android:focusableInTouchMode="true"
+                    android:fontFamily="@font/inter_medium"
+                    android:hint="Cari Lokasi Lowongan"
+                    android:imeOptions="actionSearch"
+                    android:paddingTop="11dp"
+                    android:paddingBottom="11dp"
+                    android:singleLine="true"
+                    android:textColorHint="@color/grey400"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.github.captain_miao.optroundcardview.OptRoundCardView
+                android:id="@+id/filter"
+                android:layout_width="48dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintBottom_toBottomOf="@+id/search_bar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/search_bar"
+                app:optRoundCardBackgroundColor="@color/colorWhite"
+                app:optRoundCardCornerRadius="8dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_filter"
+                    android:backgroundTint="@color/grey400" />
+            </com.github.captain_miao.optroundcardview.OptRoundCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -137,12 +161,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:optRoundCardBackgroundColor="@color/colorWhite"
-                app:optRoundCardCornerRadius="16dp"
-                app:optRoundCardLeftBottomCorner="false"
-                app:optRoundCardLeftTopCorner="true"
-                app:optRoundCardRightBottomCorner="false"
-                app:optRoundCardRightTopCorner="true" />
+                app:optRoundCardBackgroundColor="@color/colorWhite" />
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/emptyTransaksi"

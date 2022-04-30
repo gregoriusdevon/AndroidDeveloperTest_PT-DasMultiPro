@@ -122,7 +122,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() >= 1) {
-                    Call<List<Job>> call = api.searchLocation(url + "positions.json?location=" + s.toString().trim());
+                    Call<List<Job>> call = api.searchJob(url + "positions.json?location=" + s.toString().trim());
                     call.enqueue(new Callback<List<Job>>() {
                         @Override
                         public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {

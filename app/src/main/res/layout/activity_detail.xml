@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_cardhome">
@@ -34,8 +33,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:optRoundCardBackgroundColor="@color/colorWhite"
-                    app:optRoundCardCornerRadius="8dp"
-                    app:rippleColor="@null">
+                    app:optRoundCardCornerRadius="8dp">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -181,10 +179,25 @@
                         app:layout_constraintTop_toBottomOf="@+id/title" />
 
                     <TextView
+                        android:id="@+id/header"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/inter_bold"
+                        android:maxEms="12"
+                        android:text="Location:"
+                        android:textColor="@color/grey400"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+                    <TextView
                         android:id="@+id/location"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/inter_medium"
                         android:text="Elk Grove, Ca - REMOTE"
@@ -192,7 +205,7 @@
                         android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/cardView"
-                        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+                        app:layout_constraintTop_toBottomOf="@+id/header" />
 
                     <View
                         android:id="@+id/view2"
@@ -221,7 +234,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/view2" />
 
                     <TextView
-                        android:id="@+id/header"
+                        android:id="@+id/header2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -250,10 +263,10 @@
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/header" />
+                        app:layout_constraintTop_toBottomOf="@+id/header2" />
 
                     <TextView
-                        android:id="@+id/header2"
+                        android:id="@+id/header3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -282,10 +295,10 @@
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/header2" />
+                        app:layout_constraintTop_toBottomOf="@+id/header3" />
 
                     <TextView
-                        android:id="@+id/header3"
+                        android:id="@+id/header4"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -313,7 +326,38 @@
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/header3" />
+                        app:layout_constraintTop_toBottomOf="@+id/header4" />
+
+                    <TextView
+                        android:id="@+id/header5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/inter_bold"
+                        android:maxEms="12"
+                        android:text="How to Apply:"
+                        android:textColor="@color/grey400"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/description" />
+
+                    <TextView
+                        android:id="@+id/howToApply"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:maxEms="12"
+                        android:paddingBottom="16dp"
+                        android:text=""
+                        android:textColor="@color/grey700"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/header5" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <com.github.captain_miao.optroundcardview.OptRoundCardView

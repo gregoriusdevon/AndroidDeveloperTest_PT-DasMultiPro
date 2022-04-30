@@ -3,8 +3,6 @@ package com.joblist.UI.Landing;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -45,7 +43,6 @@ import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
     private LottieAnimationView loadingProgress;
-    private MaterialButton loginFacebook, loginGoogle;
     private boolean doubleBackToExitPressedOnce = false;
 
     private FirebaseAuth mAuth;
@@ -60,9 +57,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        loginGoogle = findViewById(R.id.loginGoogle);
-        loginFacebook = findViewById(R.id.loginFacebook);
         loadingProgress = findViewById(R.id.loadingProgress);
+        MaterialButton loginGoogle = findViewById(R.id.loginGoogle);
+        MaterialButton loginFacebook = findViewById(R.id.loginFacebook);
 
         mCallbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
@@ -97,6 +94,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent signInIntent = mSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, RC_SIGN_IN);
+
+                loadingProgress.playAnimation();
+                loadingProgress.setVisibility(LottieAnimationView.VISIBLE);
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             }
         });
 
@@ -140,23 +141,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private boolean haveNetworkConnection() {
-        boolean haveConnectedWifi = false;
-        boolean haveConnectedMobile = false;
-
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
-            // connected to Wifi
-            haveConnectedWifi = true;
-        } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
-            //connected to MobileData
-            haveConnectedMobile = true;
-        }
-
-        return haveConnectedWifi || haveConnectedMobile;
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -168,6 +152,10 @@ public class LoginActivity extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
+                loadingProgress.pauseAnimation();
+                loadingProgress.setVisibility(LottieAnimationView.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
                 Log.w(TAG, "Google sign in failed", e);
             }
         }
@@ -179,9 +167,6 @@ public class LoginActivity extends AppCompatActivity {
         if (AccessToken.getCurrentAccessToken() != null | GoogleSignIn.getLastSignedInAccount(LoginActivity.this) != null) {
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
-        } else if (!haveNetworkConnection()) {
-            loginGoogle.setEnabled(false);
-            loginFacebook.setEnabled(false);
         }
     }
 

@@ -13,5 +13,8 @@ public interface ApiEndPoints {
     Call<List<Job>> readJobs();
 
     @GET
-    Call<List<Job>> searchLocation(@Url String url);
+    Call<List<Job>> searchJob(@Url String url);
+
+    @GET
+    Call<Job> readDetail(@Url String url);
 }
